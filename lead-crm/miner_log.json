@@ -113,5 +113,11 @@
     "event": "miner_timeout",
     "query": "\"Zion Tech Group\"",
     "note": "soft timeout reached; stopping query loop early"
+  },
+  {
+    "ts": "2026-09-04T17:45:44.382157+00:00",
+    "event": "miner_timeout",
+    "query": "subject:diagnóstico",
+    "note": "soft timeout reached; stopping query loop early"
   }
 ]
