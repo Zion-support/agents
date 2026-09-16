@@ -3,7 +3,9 @@
 # Canonical sitemap
 /sitemap.xml  /sitemap-0.xml  301
 
-# /case-studies/ is the live proof hub (Wave 4) — do not redirect to /contact/
+/case-studies/    /contact/    301
+/industries/financial-services /industries/financial-services/index.html 200
+/industries/financial-services/ /industries/financial-services/index.html 200
 /industries/    /services/    301
 /free-tools-hub/    /tools/    301
 /products/    /services/    301
@@ -15,17 +17,8 @@
 /dashboard/    /contact/    301
 /docs/    /    301
 /automation/  /services/ai-workflow-automation/  301
-
-# Services orphans → /services/
-/services/cloud/    /services/    301
-/services/security/    /services/    301
-/services/data/    /services/    301
-/services/blockchain/    /services/    301
-/services/iot/    /services/    301
-/services/managed-observability-247/    /services/    301
-# GitHub Pages does not apply Netlify _redirects. Real HTML aliases live in public/:
-# /direitos/ → /direitos-globais/, /free-ai-itools/ → /free-ai-it-tools/,
-# /finops/ → /finops-consulting/, /roteiros/, /agents/, /ai/demo/ are real index.html pages.
+# GitHub Pages ignores Netlify _redirects. Use the public/ HTML aliases instead.
+# /finops/ → /finops-consulting/ is a real public/finops/index.html alias.
 /finops/ /finops-consulting/ 301
 /finops /finops-consulting/ 301
 /free-ai-itools/ /free-ai-it-tools/ 302
@@ -78,9 +71,6 @@
 /contact/ /contact/index.html 200
 /plans /plans/index.html 200
 /plans/ /plans/index.html 200
-
-/blog/ai-automation-brazilian-enterprises-2026 /blog/ai-automation-brazilian-enterprises-2026/index.html 200
-/blog/ai-automation-brazilian-enterprises-2026/ /blog/ai-automation-brazilian-enterprises-2026/index.html 200
 /solutions /solutions/index.html 200
 /solutions/ /solutions/index.html 200
 /ai-services /ai-services/index.html 200
@@ -102,8 +92,95 @@
 /whatsapp /whatsapp/index.html 200
 /whatsapp/ /whatsapp/index.html 200
 
-# Wave 4 LIGHT — consolidate heritage + cases to canonical hubs
-/heritage/    /about/           301
-/heritage     /about/           301
-/cases/       /case-studies/    301
-/cases        /case-studies/    301
+# Páginas Next.js App Router — mapeamentos para GitHub Pages
+# Cloud Cost Optimization
+/cloud-cost-optimization/ /cloud-cost-optimization/index.html 200
+/cloud-cost-optimization /cloud-cost-optimization/index.html 200
+# Managed IT Services
+/managed-it-services/ /managed-it-services/index.html 200
+/managed-it-services /managed-it-services/index.html 200
+# AI Services
+/ai-services/ /ai-services/index.html 200
+/ai-services /ai-services/index.html 200
+# Tools
+/tools/ /tools/index.html 200
+/tools /tools/index.html 200
+# AI Readiness Assessment
+/tools/ai-readiness-assessment/ /tools/ai-readiness-assessment/index.html 200
+/tools/ai-readiness-assessment /tools/ai-readiness-assessment/index.html 200
+# AI Customer Intelligence
+/tools/ai-customer-intelligence/ /tools/ai-customer-intelligence/index.html 200
+/tools/ai-customer-intelligence /tools/ai-customer-intelligence/index.html 200
+# Home / Root
+/ /index.html 200
+# Explore
+/explore/ /explore/index.html 200
+/explore /explore/index.html 200
+# Catalog
+/catalogo/ /catalogo/index.html 200
+/catalogo /catalogo/index.html 200
+# Services
+/services/ /services/index.html 200
+/services /services/index.html 200
+# Plans
+/plans/ /plans/index.html 200
+/plans /plans/index.html 200
+# Discovery
+/discovery/ /discovery/index.html 200
+/discovery /discovery/index.html 200
+# Blog
+/blog/ /blog/index.html 200
+/blog /blog/index.html 200
+# Agents
+/agents/ /agents/index.html 200
+/agents /agents/index.html 200
+# Affiliate
+/affiliate/ /affiliate/index.html 200
+/affiliate /affiliate/index.html 200
+# CPA
+/cpa/ /cpa/index.html 200
+/cpa /cpa/index.html 200
+# Indique
+/indique/ /indique/index.html 200
+/indique /indique/index.html 200
+# Partner
+/partners/ /partners/index.html 200
+/partners /partners/index.html 200
+# Contact
+/contact/ /contact/index.html 200
+/contact /contact/index.html 200
+# Booking
+/booking/ /booking/index.html 200
+/booking /booking/index.html 200
+# Status
+/status-page/ /status-page/index.html 200
+/status-page /status-page/index.html 200
+# Enterprise
+/enterprise/ /enterprise/index.html 200
+/enterprise /enterprise/index.html 200
+# Resources
+/resources/ /resources/index.html 200
+/resources /resources/index.html 200
+# Telemetry
+/telegram/ /telegram/index.html 200
+/telegram /telegram/index.html 200
+
+# Novas páginas
+/plans /plans/index.html 200
+/plans/ /plans/index.html 200
+/discovery /discovery/index.html 200
+/discovery/ /discovery/index.html 200
+/contact /contact/index.html 200
+/contact/ /contact/index.html 200
+/partners /partners/index.html 200
+/partners/ /partners/index.html 200
+/agents /agents/index.html 200
+/agents/ /agents/index.html 200
+
+# === Added 2026-09-15: Fix 404s ===
+/academy  /academy/index.html  200
+/academy/ /academy/index.html  200
+/tools/   /tools/index.html    200
+/tools    /tools/index.html    200
+/cpa/     /cpa/index.html      200
+/cpa      /cpa/index.html      200
