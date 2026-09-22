@@ -1,7 +1,8 @@
-import { Composio } from '@composio/core';
+// Zion Connection Monitor v2.1 — checks Composio connected accounts via REST API
+// (SDK-free for stability; Node 20+ has global fetch)
 
-const composio = new Composio({ apiKey: process.env.COMPOSIO_API_KEY });
-const userId = process.env.ZION_USER_ID || 'zion-monitor';
+const API_KEY = process.env.COMPOSIO_API_KEY;
+const BASE = 'https://backend.composio.dev/api/v1';
 
 const connections = {
   calendly: process.env.COMPOSIO_CALENDLY_CONNECTION_ID,
@@ -13,7 +14,7 @@ const connections = {
   hubspot: process.env.COMPOSIO_HUBSPOT_CONNECTION_ID,
   notion: process.env.COMPOSIO_NOTION_CONNECTION_ID,
   slack: process.env.COMPOSIO_SLACK_CONNECTION_ID,
-  _1password: process.env.COMPOSIO_1PASSWORD_CONNECTION_ID,
+  onepassword: process.env.COMPOSIO_1PASSWORD_CONNECTION_ID,
   sendgrid: process.env.COMPOSIO_SENDGRID_CONNECTION_ID,
   activecampaign: process.env.COMPOSIO_ACTIVECAMPAIGN_CONNECTION_ID,
   firecrawl: process.env.COMPOSIO_FIRECRAWL_CONNECTION_ID,
@@ -21,38 +22,39 @@ const connections = {
   tavily: process.env.COMPOSIO_TAVILY_CONNECTION_ID,
 };
 
-async function listTools(connectionId) {
-  if (!connectionId) return { count: 0, tools: [] };
+async function checkConnection(id) {
+  if (!id) return { status: 'NO_SECRET' };
   try {
-    const result = await composio.tools.list({ connectionIds: [connectionId] });
-    return { count: (result.tools || []).length, tools: result.tools || [] };
+    const res = await fetch(`${BASE}/connectedAccounts/${id}`, {
+      headers: { 'x-api-key': API_KEY },
+      signal: AbortSignal.timeout(15000),
+    });
+    if (!res.ok) return { status: 'ERROR', error: `HTTP ${res.status}` };
+    const data = await res.json();
+    const s = (data.status || '').toUpperCase();
+    return { status: s === 'ACTIVE' ? 'ACTIVE' : (s || 'UNKNOWN'), raw: s };
   } catch (e) {
-    return { count: 0, tools: [], error: e.message };
+    return { status: 'ERROR', error: e.message };
   }
 }
 
 async function run() {
   const ts = new Date().toISOString();
-  console.log(`\n═══ ZION CONNECTION MONITOR v2.0 — ${ts} ═══\n`);
+  console.log(`\n═══ ZION CONNECTION MONITOR v2.1 — ${ts} ═══\n`);
 
   const report = { timestamp: ts, connections: [], alerts: [] };
   let activeCount = 0;
   let errorCount = 0;
 
   for (const [name, id] of Object.entries(connections)) {
-    if (!id) {
-      report.connections.push({ name, status: 'NO_SECRET' });
-      continue;
-    }
-    const { count, error } = await listTools(id);
-    const status = error ? 'ERROR' : count > 0 ? 'ACTIVE' : 'NO_TOOLS';
-    if (status === 'ACTIVE') activeCount++;
-    if (status === 'ERROR') errorCount++;
-    report.connections.push({ name, status, count, error });
-    console.log(`  ${status === 'ACTIVE' ? '✓' : status === 'ERROR' ? '✗' : '○'} ${name.padEnd(16)} ${status} (${count} tools)`);
+    const r = await checkConnection(id);
+    if (r.status === 'ACTIVE') activeCount++;
+    if (r.status === 'ERROR') errorCount++;
+    report.connections.push({ name, ...r });
+    const icon = r.status === 'ACTIVE' ? '✓' : r.status === 'ERROR' ? '✗' : '○';
+    console.log(`  ${icon} ${name.padEnd(16)} ${r.status}${r.error ? ' — ' + r.error : ''}`);
   }
 
-  // Alert if any connection is degraded
   if (errorCount > 0) {
     report.alerts.push({ severity: 'warning', message: `${errorCount} connection(s) with errors` });
   }
@@ -65,11 +67,15 @@ async function run() {
   console.log(`\n  Health Score: ${healthScore}% (${activeCount}/${Object.keys(connections).length} active)`);
   console.log(`\n═══ MONITOR COMPLETE ═══`);
 
-  // Write report for downstream steps
   const fs = await import('fs');
   fs.writeFileSync('composio-connection-report.json', JSON.stringify(report, null, 2));
-  console.log(JSON.stringify(report, null, 2));
   return report;
 }
 
-run().catch(e => { console.error('FATAL:', e); process.exit(1); });
+// Never hard-fail the workflow on monitor errors; report and exit cleanly.
+run().catch(e => {
+  console.error('Monitor error (non-fatal):', e);
+  import('fs').then(fs => fs.writeFileSync('composio-connection-report.json',
+    JSON.stringify({ timestamp: new Date().toISOString(), healthScore: 0, error: String(e) }, null, 2)));
+  process.exit(0);
+});
