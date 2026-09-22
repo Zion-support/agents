@@ -1,16 +1,10 @@
-# 🌐 Zion App Network — Interlinks
+# Agents
 
-**agents** is part of the Zion Tech Group app network (630+ apps).
+AI Agents — Zion Tech Group.
 
-- 📇 [Master Index](https://github.com/Zion-support/zion-network/blob/main/APPS_NETWORK.md)
-- 🗂️ Category: [AI Agents & Orchestration](https://github.com/Zion-support/zion-network/blob/main/network/ai-agents-orchestration.md)
+## Network
+- 📚 Master catalog: [zion-app-network/CATALOG.md](https://github.com/Zion-support/zion-app-network/blob/main/CATALOG.md)
+- Hubs: [zion-app-network](https://github.com/Zion-support/zion-app-network) · [zion-apps-hub](https://github.com/Zion-support/zion-apps-hub)
+- Related: [zion-agents](https://github.com/Zion-support/zion-agents) · [zion-agentforge](https://github.com/Zion-support/zion-agentforge) · [ai-agent-fleet](https://github.com/Zion-support/ai-agent-fleet) · [ai-agent-swarm](https://github.com/Zion-support/ai-agent-swarm) · [zion-ai-agent-orchestrator](https://github.com/Zion-support/zion-ai-agent-orchestrator) · [zion-ai-agent-marketplace](https://github.com/Zion-support/zion-ai-agent-marketplace)
 
-## Related apps
-- [zion-agents](https://github.com/Zion-support/zion-agents) — autonomous agent fleet
-- [ai-agent-fleet](https://github.com/Zion-support/ai-agent-fleet) — enterprise agent fleets
-- [ai-agent-swarm](https://github.com/Zion-support/ai-agent-swarm) — swarm coordination
-- [ai-agent-workflow](https://github.com/Zion-support/ai-agent-workflow) — multi-agent workflows
-- [zion-network](https://github.com/Zion-support/zion-network) — network hub
-
----
-🌐 [Network Index](https://github.com/Zion-support/zion-network/blob/main/APPS_NETWORK.md) · [Status](https://zion-support.github.io/zion-status/) · [Plans](https://zion-support.github.io/zion-plans/) · [Portal](https://zion-support.github.io/zion-portal/)
+*Zion Tech Group · [ziontechgroup.com](https://ziontechgroup.com)*
