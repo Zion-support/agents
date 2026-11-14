@@ -21,14 +21,14 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     env:
-      COMPOSIO_API_KEY: ${{ secrets.COMPOSIO_API_KEY }}
+      COMPOSIO_API_KEY: ${{ secrets.COMPOSIO_HEALTH_API_KEY }}
     steps:
       - name: Verify API key via Composio v3 connected accounts
         shell: bash
         run: |
           set -euo pipefail
           if [ -z "${COMPOSIO_API_KEY:-}" ]; then
-            echo "::error::COMPOSIO_API_KEY secret is not set."
+            echo "::error::COMPOSIO_HEALTH_API_KEY secret is not set."
             exit 1
           fi
           code=$(curl --silent --show-error --output /tmp/composio.json --write-out "%{http_code}" \
@@ -43,7 +43,6 @@ jobs:
               ;;
             *)
               echo "::error::Composio health probe returned unexpected HTTP $code."
-              head -c 500 /tmp/composio.json || true
               exit 1
               ;;
           esac
